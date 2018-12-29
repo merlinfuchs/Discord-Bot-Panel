@@ -218,6 +218,18 @@ function createEventChart(client) {
 
   client.on('message', function(msg) {
     events.messageSend++;
+
+    if (msg.content == "") {
+      return;
+    }
+    $('#messagesTab').prepend(`
+      <div class="card m-3">
+        <div class="card-body">
+          <h5 class="card-title">${msg.author.username} <span class="badge badge-light">#${msg.author.discriminator}</span></h5>
+          ${msg.content}
+        </div>
+      </div>
+      `);
   });
 
   client.on('presenceUpdate', function(oldMember, newMember) {
