@@ -18,7 +18,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Connect to bot</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Connect to bot <span id="connectLoading"></span></h5>
       </div>
       <div class="modal-body">
         <div id="connectError"></div>
@@ -86,20 +86,27 @@
             </div>
           </div>
         </div>
-        <div class="card">
+        <div class="card my-5">
           <div class="card-body">
             <h5 class="card-title">Events</h5>
             <nav>
               <div class="nav nav-tabs" role="tablist">
-                <a class="nav-item nav-link active" data-toggle="tab" href="#chartTab" role="tab" aria-controls="nav-home" aria-selected="true">Chart</a>
-                <a class="nav-item nav-link" data-toggle="tab" href="#logsTab" role="tab" aria-controls="nav-profile" aria-selected="false">Logs</a>
+                <a class="nav-item nav-link active" data-toggle="tab" href="#chartTab" role="tab" aria-controls="nav-home" aria-selected="true">Overview</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#messagesTab" role="tab" aria-controls="nav-profile" aria-selected="false">Messages</a>
               </div>
             </nav>
             <div class="tab-content">
               <div class="tab-pane fade show active" id="chartTab" role="tabpanel" aria-labelledby="nav-home-tab"><canvas id="eventChart"></canvas></div>
-              <div class="tab-pane fade" id="logsTab" role="tabpanel" aria-labelledby="nav-profile-tab">Not implemented</div>
               <div style="max-height: 500px; overflow: auto;" class="tab-pane fade" id="messagesTab" role="tabpanel" aria-labelledby="nav-profile-tab"></div>
             </div>
+          </div>
+        </div>
+        <div class="card my-5">
+          <div class="card-body">
+            <h5 class="card-title">Eval</h5>
+            <div id="evalOutput"></div>
+            <textarea class="form-control" id="evalInput" placeholder="client.token" cols="30" rows="10"></textarea>
+            <button id="evalButton" type="button" class="btn btn-primary ml-auto">Run</button>
           </div>
         </div>
       </div>
@@ -120,12 +127,19 @@
   <script>
     $(function() {
       $('#connectButton').click(function() {
+        $('#connectLoading').html(`
+          <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          `)
         client.login($('#token').val())
           .then(function() {
             $('#connectModal').modal('hide');
+            $('#connectLoading').html('');
             setCookie('token', $('#token').val(), 7);
           })
           .catch(function() {
+            $('#connectLoading').html('');
             $('#connectError').html(
               `
             <div class="alert alert-danger" role="alert">
