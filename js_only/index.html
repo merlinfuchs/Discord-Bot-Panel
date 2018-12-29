@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bot Panel</title>
+
+  <link class="bot-avatar" rel="icon" type="image/gif" sizes="64x64">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.0/css/mdb.min.css" rel="stylesheet">
+</head>
+
+<div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Connect to bot</h5>
+      </div>
+      <div class="modal-body">
+        <div id="connectError"></div>
+        <input type="password" class="form-control" id="token">
+      </div>
+      <div class="modal-footer">
+        <button id="connectButton" type="button" class="btn btn-secondary">Connect</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<body>
+  <br><br><br><br>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row p-3">
+          <div class="col-lg-3">
+            <img class="rounded img-fluid bot-avatar" alt="">
+          </div>
+          <div class="col">
+            <h1 class="display-4"><span class="bot-name"></span> <span class="badge badge-light"><span class="bot-discriminator"></span></span></h1>
+          </div>
+        </div>
+        <hr>
+        <div class="row my-5">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Bot</h5>
+                <h6 class="card-subtitle">overview</h6>
+                <p>Not implemented</p>
+                <canvas class="my-4" id="botChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Channels</h5>
+                <h6 class="card-subtitle">by channel type</h6>
+                <canvas class="my-4" id="channelChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row my-5">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Guilds</h5>
+                <h6 class="card-subtitle">by member count</h6>
+                <canvas class="my-4" id="guildsChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Activities</h5>
+                <h6 class="card-subtitle">by commonness</h6>
+                <canvas class="my-4" id="activityChart" style="max-width: 500px;"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Events</h5>
+            <nav>
+              <div class="nav nav-tabs" role="tablist">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#chartTab" role="tab" aria-controls="nav-home" aria-selected="true">Chart</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#logsTab" role="tab" aria-controls="nav-profile" aria-selected="false">Logs</a>
+              </div>
+            </nav>
+            <div class="tab-content">
+              <div class="tab-pane fade show active" id="chartTab" role="tabpanel" aria-labelledby="nav-home-tab"><canvas id="eventChart"></canvas></div>
+              <div class="tab-pane fade" id="logsTab" role="tabpanel" aria-labelledby="nav-profile-tab">Not implemented</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.0/js/mdb.min.js"></script>
+
+  <script src="js/discord.min.js"></script>
+  <script src="js/cookies.js"></script>
+  <script src="js/bot.js"></script>
+
+  <script src="js/charts.js"></script>
+
+  <script>
+    $(function() {
+      $('#connectButton').click(function() {
+        client.login($('#token').val())
+          .then(function() {
+            $('#connectModal').modal('hide');
+            setCookie('token', $('#token').val(), 7);
+          })
+          .catch(function() {
+            $('#connectError').html(
+              `
+            <div class="alert alert-danger" role="alert">
+            An error occured while trying to connect to the bot.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          `
+            );
+          });
+      });
+
+      $('#connectModal').modal({
+        backdrop: 'static',
+        keyboard: false
+      })
+      $('#token').val(getCookie('token'));
+    });
+  </script>
+</body>
+
+</html>
