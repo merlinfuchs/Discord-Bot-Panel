@@ -103,10 +103,46 @@
         </div>
         <div class="card my-5">
           <div class="card-body">
-            <h5 class="card-title">Eval</h5>
-            <div id="evalOutput"></div>
-            <textarea class="form-control" id="evalInput" placeholder="client.token" cols="30" rows="10"></textarea>
-            <button id="evalButton" type="button" class="btn btn-primary ml-auto">Run</button>
+            <h5 class="card-title">Interaction</h5>
+            <nav>
+              <div class="nav nav-tabs my-4" role="tablist">
+                <a class="nav-item nav-link active" data-toggle="tab" href="#finderTab" role="tab" aria-controls="nav-home" aria-selected="true">Finder</a>
+                <a class="nav-item nav-link" data-toggle="tab" href="#evalTab" role="tab" aria-controls="nav-profile" aria-selected="false">Eval</a>
+              </div>
+            </nav>
+            <div class="tab-content">
+              <div style="max-height: 500px; overflow: auto;" class="tab-pane fade show active" id="finderTab" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="form-group form-inline">
+                  <p>Find </p>
+                  <select class="form-control form-control-sm mx-2" id="findWhat">
+                    <option value="users">Users</option>
+                    <option value="guilds">Guilds</option>
+                    <option value="roles">Roles</option>
+                    <option value="channels">Channels</option>
+                  </select>
+                  <p> by </p>
+                  <div class="input-group mx-2">
+                    <div class="input-group-prepend">
+                      <select class="form-control form-control-sm" id="findBy">
+                        <option value="id">id</option>
+                        <option value="name">name</option>
+                      </select>
+                    </div>
+                    <input type="text" class="form-control form-control-sm" id="findValue">
+                  </div>
+                </div>
+                <table id="findOutput" class="table my-3">
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+                <button type="button" class="btn btn-primary btn-md" id="findButton">Find</button>
+              </div>
+              <div class="tab-pane fade" id="evalTab" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div id="evalOutput"></div>
+                <textarea class="form-control" id="evalInput" placeholder="client.token" cols="30" rows="10"></textarea>
+                <button id="evalButton" type="button" class="btn btn-primary ml-auto">Run</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -123,12 +159,13 @@
   <script src="js/bot.js"></script>
 
   <script src="js/charts.js"></script>
+  <script src="js/finder.js"></script>
 
   <script>
     $(function() {
       $('#connectButton').click(function() {
         $('#connectLoading').html(`
-          <div class="spinner-border text-primary" role="status">
+          <div class="spinner-grow text-primary" role="status">
             <span class="sr-only">Loading...</span>
           </div>
           `)
@@ -156,7 +193,7 @@
       $('#connectModal').modal({
         backdrop: 'static',
         keyboard: false
-      })
+      });
       $('#token').val(getCookie('token'));
 
       $('#evalButton').click(function() {

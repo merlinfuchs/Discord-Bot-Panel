@@ -7,7 +7,5 @@ client.on('ready', function() {
   $('.bot-discriminator').html('#' + client.user.discriminator);
   $('.bot-avatar').attr('src', client.user.displayAvatarURL);
 
-
-
   createCharts(client);
 });
