@@ -192,6 +192,17 @@ function createEventChart(client) {
           borderWidth: 2
         },
         {
+          label: "typingStop",
+          data: [],
+          backgroundColor: [
+            'rgba(105, 99, 21, .2)',
+          ],
+          borderColor: [
+            'rgba(105, 99, 21, .7)',
+          ],
+          borderWidth: 2
+        },
+        {
           label: "reactionAdd",
           data: [],
           backgroundColor: [
@@ -213,6 +224,7 @@ function createEventChart(client) {
     messageSend: 0,
     presenceUpdate: 0,
     typingStart: 0,
+    typingStop: 0,
     reactionAdd: 0
   };
 
@@ -238,6 +250,10 @@ function createEventChart(client) {
 
   client.on('typingStart', function(channel, user) {
     events.typingStart++;
+  });
+
+  client.on('typingStop', function(reaction, user) {
+    events.typingStop++;
   });
 
   client.on('messageReactionAdd', function(reaction, user) {
