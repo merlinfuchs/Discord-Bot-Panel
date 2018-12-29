@@ -158,6 +158,21 @@
         keyboard: false
       })
       $('#token').val(getCookie('token'));
+
+      $('#evalButton').click(function() {
+        var evalInput = $('#evalInput').val();
+        var evalOutput = eval(evalInput);
+        $('#evalOutput').html(
+          `
+          <div class="alert alert-success" role="alert">
+            <b>Output:</b> ${evalOutput}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          `
+        );
+      });
     });
   </script>
 </body>
