@@ -181,7 +181,7 @@ function createEventChart(client) {
           borderWidth: 2
         },
         {
-          label: "guildMemberAdd",
+          label: "typingStart",
           data: [],
           backgroundColor: [
             'rgba(235, 22, 21, .2)',
@@ -212,7 +212,7 @@ function createEventChart(client) {
   var events = {
     messageSend: 0,
     presenceUpdate: 0,
-    guildMemberAdd: 0,
+    typingStart: 0,
     reactionAdd: 0
   };
 
@@ -236,8 +236,8 @@ function createEventChart(client) {
     events.presenceUpdate++;
   });
 
-  client.on('guildMemberAdd', function(member) {
-    events.guildMemberAdd++;
+  client.on('typingStart', function(channel, user) {
+    events.typingStart++;
   });
 
   client.on('messageReactionAdd', function(reaction, user) {
