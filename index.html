@@ -14,29 +14,52 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.6.0/css/mdb.min.css" rel="stylesheet">
 </head>
 
-<div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Connect to bot <span id="connectLoading"></span></h5>
-      </div>
-      <div class="modal-body">
-        <div id="connectError"></div>
-        <input type="password" class="form-control" id="token">
-      </div>
-      <div class="modal-footer">
-        <button id="connectButton" type="button" class="btn btn-secondary">Connect</button>
+<body data-spy="scroll" data-target="#navbar" style="position: relative;" data-offset="0">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="nav mr-auto nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="#overview">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#charts">Charts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#events">Events</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#interaction">Interaction</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="connectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Connect to bot <span id="connectLoading"></span></h5>
+        </div>
+        <div class="modal-body">
+          <div id="connectError"></div>
+          <input type="password" class="form-control" id="token">
+        </div>
+        <div class="modal-footer">
+          <button id="connectButton" type="button" class="btn btn-secondary">Connect</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<body>
   <br><br><br><br>
   <div class="container">
     <div class="card">
       <div class="card-body">
-        <div class="row p-3">
+        <div class="row p-3" id="overview">
           <div class="col-lg-3">
             <img class="rounded img-fluid bot-avatar" alt="">
           </div>
@@ -45,7 +68,7 @@
           </div>
         </div>
         <hr>
-        <div class="row my-5">
+        <div id="charts" class="row my-5">
           <div class="col">
             <div class="card">
               <div class="card-body">
@@ -100,7 +123,7 @@
             </div>
           </div>
         </div>
-        <div class="card my-5">
+        <div id="events" class="card my-5">
           <div class="card-body">
             <h5 class="card-title">Events</h5>
             <nav>
@@ -115,7 +138,7 @@
             </div>
           </div>
         </div>
-        <div class="card my-5">
+        <div id="interaction" class="card my-5">
           <div class="card-body">
             <h5 class="card-title">Interaction</h5>
             <nav>
