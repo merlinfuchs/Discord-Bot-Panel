@@ -11,7 +11,8 @@ client.on('ready', function() {
   $('.bot-guilds').html(client.guilds.size);
   $('.bot-channels').html(client.channels.size);
   $('.bot-users').html(client.users.size);
-  $('.bot-avatar').attr('src', client.user.displayAvatarURL);
+  $('img.bot-avatar').attr('src', client.user.displayAvatarURL);
+  $('link.bot-avatar').attr('href', client.user.displayAvatarURL);
 
   createCharts(client);
 });
